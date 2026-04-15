@@ -78,32 +78,35 @@ export default async function Home({ searchParams }) {
       ? { min: precioMin, max: precioMax }
       : null;
 
-  return (
-    <main className="min-h-screen bg-gray-50">
-      <Navbar />
-      <Buscador valorInicial={buscar} />
-      <div className="flex gap-8 px-8 mt-4">
-        <aside className="w-64 space-y-6">
-          <FiltroCategoria
-            categorias={categorias}
-            categoriaActual={categoria}
-            buscar={buscar}
-          />
-          <FiltroColor colores={colores} colorActual={color} buscar={buscar} />
-          <FiltroTalla tallas={tallas} tallaActual={talla} buscar={buscar} />
-          <FiltroPrecio precioActual={precioActual} buscar={buscar} />
-        </aside>
+ return (
+  <main className="min-h-screen bg-gray-50">
+    <Navbar />
+    <Buscador valorInicial={buscar} />
 
-        <div className="flex-1">
-          <p className="text-gray-500 mb-4">{total} productos encontrados</p>
-          <ProductoGrid productos={productos} />
-          <Paginacion
-            paginaActual={pagina}
-            totalPaginas={totalPaginas}
-            buscar={buscar}
-          />
-        </div>
+    <div className="flex flex-col md:flex-row gap-6 px-4 md:px-8 mt-4">
+      
+      <aside className="w-full md:w-64 md:shrink-0 space-y-6">
+        <FiltroCategoria
+          categorias={categorias}
+          categoriaActual={categoria}
+          buscar={buscar}
+        />
+        <FiltroColor colores={colores} colorActual={color} buscar={buscar} />
+        <FiltroTalla tallas={tallas} tallaActual={talla} buscar={buscar} />
+        <FiltroPrecio precioActual={precioActual} buscar={buscar} />
+      </aside>
+
+      <div className="flex-1 min-w-0">
+        <p className="text-gray-500 mb-4">{total} productos encontrados</p>
+        <ProductoGrid productos={productos} />
+        <Paginacion
+          paginaActual={pagina}
+          totalPaginas={totalPaginas}
+          buscar={buscar}
+        />
       </div>
-    </main>
-  );
+
+    </div>
+  </main>
+);
 }
