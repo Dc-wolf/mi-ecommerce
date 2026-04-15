@@ -15,22 +15,35 @@ export default function FiltroPrecio({ precioActual, buscar }) {
   ];
 
   const filtrar = (min, max) => {
-    const params = new URLSearchParams();
-    if (buscar) params.set("q", buscar);
-    params.set("precioMin", min);
-    if (max !== null) params.set("precioMax", max);
-    params.set("pagina", "1");
-    router.push(`/?${params.toString()}`);
-    setAbierto(false); // 👈 mismo comportamiento
-  };
+  const params = new URLSearchParams(window.location.search);
 
-  const limpiar = () => {
-    const params = new URLSearchParams();
-    if (buscar) params.set("q", buscar);
-    params.set("pagina", "1");
-    router.push(`/?${params.toString()}`);
-    setAbierto(false);
-  };
+  if (buscar) params.set("q", buscar);
+
+  if (min !== null) params.set("precioMin", min);
+  else params.delete("precioMin");
+
+  if (max !== null) params.set("precioMax", max);
+  else params.delete("precioMax");
+
+  params.set("pagina", "1");
+
+  router.push(`/?${params.toString()}`);
+  setAbierto(false);
+};
+
+const limpiar = () => {
+  const params = new URLSearchParams(window.location.search);
+
+  if (buscar) params.set("q", buscar);
+
+  params.delete("precioMin");
+  params.delete("precioMax");
+
+  params.set("pagina", "1");
+
+  router.push(`/?${params.toString()}`);
+  setAbierto(false);
+};
 
   return (
     <div className="w-full md:w-56 md:shrink-0">

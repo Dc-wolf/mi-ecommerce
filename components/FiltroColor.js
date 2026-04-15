@@ -7,13 +7,21 @@ export default function FiltroColor({ colores, colorActual, buscar }) {
   const [abierto, setAbierto] = useState(false);
 
   const filtrar = (colorSeleccionado) => {
-    const params = new URLSearchParams();
-    if (buscar) params.set("q", buscar);
-    if (colorSeleccionado) params.set("color", colorSeleccionado);
-    params.set("pagina", "1");
-    router.push(`/?${params.toString()}`);
-    setAbierto(false); // 👈 mismo comportamiento que categorías
-  };
+  const params = new URLSearchParams(window.location.search);
+
+  if (buscar) params.set("q", buscar);
+
+  if (colorSeleccionado) {
+    params.set("color", colorSeleccionado);
+  } else {
+    params.delete("color");
+  }
+
+  params.set("pagina", "1");
+
+  router.push(`/?${params.toString()}`);
+  setAbierto(false);
+};
 
   return (
     <div className="w-full md:w-56 md:shrink-0">

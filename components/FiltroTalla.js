@@ -7,13 +7,21 @@ export default function FiltroTalla({ tallas, tallaActual, buscar }) {
   const [abierto, setAbierto] = useState(false);
 
   const filtrar = (tallaSeleccionada) => {
-    const params = new URLSearchParams();
-    if (buscar) params.set("q", buscar);
-    if (tallaSeleccionada) params.set("talla", tallaSeleccionada);
-    params.set("pagina", "1");
-    router.push(`/?${params.toString()}`);
-    setAbierto(false); // 👈 mismo comportamiento
-  };
+  const params = new URLSearchParams(window.location.search);
+
+  if (buscar) params.set("q", buscar);
+
+  if (tallaSeleccionada) {
+    params.set("talla", tallaSeleccionada);
+  } else {
+    params.delete("talla");
+  }
+
+  params.set("pagina", "1");
+
+  router.push(`/?${params.toString()}`);
+  setAbierto(false);
+};
 
   return (
     <div className="w-full md:w-56 md:shrink-0">
